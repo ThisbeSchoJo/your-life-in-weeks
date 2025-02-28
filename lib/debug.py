@@ -2,7 +2,8 @@
 # lib/debug.py
 
 from models.__init__ import CONN, CURSOR
-from models.week import *
+from models.week import Week
+from models.comment import Comment
 
 import ipdb
 
