@@ -103,6 +103,32 @@ class Week:
 
         cls.all = [cls.instance_from_db(row) for row in rows]
 
+    @classmethod
+    def find_by_id(cls, id):
+        sql = '''
+            SELECT * FROM weeks
+            WHERE id = ?
+        '''
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+
+        if row:
+            return cls.instance_from_db(row)
+        else:
+            return None
+
+    def delete(self):
+        sql = '''
+            DELETE FROM weeks
+            WHERE id = ?
+        '''
+
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        Week.all = [week for week in Week.all if week.id != self.id]
+
+
     def __repr__(self):
         return f"<Week {self.id} - User: {self.user}, Date: {self.date}, Satisfaction Rating: {self.satisfaction_rating}, Comments: {self.comments}>"
     
