@@ -1,6 +1,8 @@
 from models.__init__ import CONN, CURSOR
 
 class Comment:
+
+    all = []
     
     def __init__(self, events, week_id, category):
         self.events = events
@@ -51,6 +53,24 @@ class Comment:
         '''
 
         CURSOR.execute(sql)
+
+    def save(self):
+        sql = '''
+            INSERT INTO comments (events, category, week_id) 
+            VALUES (?, ?, ?)
+        '''
+
+        CURSOR.execute(sql, (self.events, self.category, self.week_id))
+
+        self.id = CURSOR.lastrowid
+
+        Comment.all.append(self)
+    
+    @classmethod
+    def create(cls, events, week_id, category):
+        new_comment = cls(events, week_id, category)
+        new_comment.save()
+        return new_comment
 
     def __repr__(self):
         return f"<Comment: # {self.id} - Events: {self.events}, Category: {self.category}, Week ID: {self.week_id}>"
