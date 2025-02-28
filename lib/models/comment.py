@@ -71,6 +71,35 @@ class Comment:
         new_comment = cls(events, week_id, category)
         new_comment.save()
         return new_comment
+    
+    @classmethod
+    def instance_from_db(cls, row):
+        new_comment = cls(row[1], row[2])
+        new_comment.id = row[0]
+
+    @classmethod
+    def get_all(cls):
+        sql = '''
+            SELECT * FROM comments
+        '''
+
+        rows = CURSOR.execute(sql).fetchall()
+
+        cls.all = [cls.instance_from_db(row) for row in rows]
+
+    @classmethod
+    def find_by_id(cls, id):
+        sql = '''
+            SELECT * FROM comments
+            WHERE id = ?
+        '''
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+
+        if row:
+            return cls.instance_from_db(row)
+        else:
+            return None
 
     def __repr__(self):
         return f"<Comment: # {self.id} - Events: {self.events}, Category: {self.category}, Week ID: {self.week_id}>"

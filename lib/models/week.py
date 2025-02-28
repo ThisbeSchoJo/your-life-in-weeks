@@ -129,6 +129,19 @@ class Week:
         Week.all = [week for week in Week.all if week.id != self.id]
 
 
+    def comment(self):
+        from models.comment import Comment
+
+        sql = '''
+            SELECT * FROM comments
+            WHERE week_id = ?
+        '''
+
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+
+        return [Comment.instance_from_bd(row) for row in rows]
+
+
     def __repr__(self):
         return f"<Week {self.id} - User: {self.user}, Date: {self.date}, Satisfaction Rating: {self.satisfaction_rating}, Comments: {self.comments}>"
     
