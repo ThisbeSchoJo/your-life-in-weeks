@@ -42,5 +42,15 @@ class Comment:
             )
         '''
 
+        CURSOR.execute(sql)
+
+    @classmethod
+    def drop_table(cls):
+        sql='''
+            DROP TABLE IF EXISTS comments
+        '''
+
+        CURSOR.execute(sql)
+
     def __repr__(self):
         return f"<Comment: # {self.id} - Events: {self.events}, Category: {self.category}, Week ID: {self.week_id}>"
