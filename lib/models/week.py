@@ -1,6 +1,8 @@
 from models.__init__ import CONN, CURSOR
 
 class Week:
+
+    all = []
     
     def __init__(self, user, date, satisfaction_rating, comments):
         self.user = user
