@@ -15,10 +15,10 @@ class Comment:
     @category_getter.setter
     def category(self, value):
         # WILL PROBABLY NEED TO CHANGE THIS VALIDATION
-        if (type(value) == int) and (value > 0):
+        if (type(value) == str) and (len(value) > 0):
             self._category = value
         else:
-            raise Exception("Error: Category must ne an integer that is greater than 0!")
+            raise Exception("Error: Category must ne a string that is at least 1 character long!")
 
     @property   
     def week_id_getter(self):
@@ -31,7 +31,16 @@ class Comment:
         else:
             raise Exception("Error: Week ID must be an integer!")
         
-    
+    @classmethod
+    def create_table(cls):
+        sql='''
+            CREATE TABLE IF NOT EXISTS comments (
+            id INTEGER PRIMARY KEY,
+            events TEXT,
+            category TEXT,
+            week_id INTEGER
+            )
+        '''
 
     def __repr__(self):
         return f"<Comment: # {self.id} - Events: {self.events}, Category: {self.category}, Week ID: {self.week_id}>"

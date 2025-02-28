@@ -53,8 +53,8 @@ class Week:
             CREATE TABLE IF NOT EXISTS weeks (
                 id INTEGER PRIMARY KEY,
                 user TEXT,
-                date INT,
-                satisfaction_rating INT,
+                date INTEGER,
+                satisfaction_rating INTEGER,
                 comments TEXT
             )
         '''
