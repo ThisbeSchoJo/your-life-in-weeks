@@ -9,6 +9,7 @@ class Week:
         self.date = date
         self.satisfaction_rating = satisfaction_rating
         self.comments = comments
+        self.id = None
 
     @property
     def user_getter(self):
@@ -43,3 +44,20 @@ class Week:
             self._satisfaction_rating = value
         else:
             raise Exception("Error: Satisfaction rating must be an integer that is at least 1 character long!")
+        
+    # NEED TO ADD THE OTHER PROPERTIES
+
+    @classmethod
+    def create_table(cls):
+        sql = '''
+            CREATE TABLE IF NOT EXISTS weeks (
+                id INTEGER PRIMARY KEY,
+                user TEXT,
+                date INT,
+                satisfaction_rating INT,
+                comments TEXT
+            )
+        '''
+
+        CURSOR.execute(sql)
+        
