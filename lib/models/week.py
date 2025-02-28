@@ -40,10 +40,10 @@ class Week:
     
     @satisfaction_rating_getter.setter
     def satisfaction_rating(self, value):
-        if (type(value) == int) and (len(value) > 0):
+        if (type(value) == int) and (0 < value < 10):
             self._satisfaction_rating = value
         else:
-            raise Exception("Error: Satisfaction rating must be an integer that is at least 1 character long!")
+            raise Exception("Error: Satisfaction rating must be an integer between 1 and 10!")
         
     # NEED TO ADD THE OTHER PROPERTIES
 
@@ -60,4 +60,49 @@ class Week:
         '''
 
         CURSOR.execute(sql)
-        
+
+    @classmethod
+    def drop_table(cls):
+        sql = '''
+            DROP TABLE IF EXISTS weeks
+        '''
+
+        CURSOR.execute(sql)
+
+    def save(self):
+        sql = '''
+            INSERT INTO weeks (user, date, satisfaction_rating, comments) 
+            VALUES (?, ?, ?, ?)
+        '''
+
+        CURSOR.execute(sql, (self.user, self.date, self.satisfaction_rating, self.comments))
+
+        self.id = CURSOR.lastrowid
+
+        Week.all.append(self)
+
+    @classmethod
+    def create(cls, user, date, satisfaction_rating, comments):
+        new_week = cls(user, date, satisfaction_rating, comments)
+        new_week.save()
+        return new_week
+    
+    @classmethod
+    def instance_from_db(cls, row):
+        new_week = cls(row[1], row[2], row[3], row[4])
+        new_week.id = cls(row[0])
+        return new_week
+
+    @classmethod
+    def get_all(cls):
+        sql = '''
+            SELECT * FROM weeks
+        '''
+
+        rows = CURSOR.execute(sql).fetchall()
+
+        cls.all = [cls.instance_from_db(row) for row in rows]
+
+    def __repr__(self):
+        return f"<Week {self.id} - User: {self.user}, Date: {self.date}, Satisfaction Rating: {self.satisfaction_rating}, Comments: {self.comments}>"
+    
