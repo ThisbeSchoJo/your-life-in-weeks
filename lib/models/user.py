@@ -10,7 +10,7 @@ class User:
 
     @property
     def name(self):
-        return self.__name
+        return self._name
     
     @name.setter
     def name(self, name_value):

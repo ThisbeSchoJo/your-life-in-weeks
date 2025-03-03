@@ -1,3 +1,4 @@
+from datetime import datetime
 from models.__init__ import CONN, CURSOR
 
 class Week:
@@ -29,10 +30,10 @@ class Week:
     @date_getter.setter
     def date(self, value):
         # MIGHT NEED TO CHANGE VALUE DATA TYPE
-        if (type(value) == int) and (value > 0):
-            self._date = value
+        if (type(value) == str) and (len(value) > 0):
+            self._date = datetime.strptime(value, "%Y-%m-%d").date()
         else:
-            raise Exception("Date must be an integer and at least 1 character long!")
+            raise Exception("Date must be a string and in YYYY-MM-DD format!")
         
     @property
     def satisfaction_rating_getter(self):
@@ -53,7 +54,7 @@ class Week:
             CREATE TABLE IF NOT EXISTS weeks (
                 id INTEGER PRIMARY KEY,
                 user TEXT,
-                date INTEGER,
+                date TEXT,
                 satisfaction_rating INTEGER,
                 comments TEXT
             )
@@ -75,8 +76,8 @@ class Week:
             VALUES (?, ?, ?, ?)
         '''
 
-        CURSOR.execute(sql, (self.user, self.date, self.satisfaction_rating, self.comments))
-
+        CURSOR.execute(sql, (self.user, self.date.strftime("%Y-%m-%d"), self.satisfaction_rating, self.comments))
+        CONN.commit()
         self.id = CURSOR.lastrowid
 
         Week.all.append(self)
@@ -90,7 +91,7 @@ class Week:
     @classmethod
     def instance_from_db(cls, row):
         new_week = cls(row[1], row[2], row[3], row[4])
-        new_week.id = cls(row[0])
+        new_week.id = row[0]
         return new_week
 
     @classmethod
@@ -114,8 +115,7 @@ class Week:
 
         if row:
             return cls.instance_from_db(row)
-        else:
-            return None
+        return None
 
     def delete(self):
         sql = '''
@@ -139,7 +139,7 @@ class Week:
 
         rows = CURSOR.execute(sql, (self.id,)).fetchall()
 
-        return [Comment.instance_from_bd(row) for row in rows]
+        return [Comment.instance_from_db(row) for row in rows]
 
 
     def __repr__(self):

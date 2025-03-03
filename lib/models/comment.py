@@ -40,7 +40,8 @@ class Comment:
             id INTEGER PRIMARY KEY,
             events TEXT,
             category TEXT,
-            week_id INTEGER
+            week_id INTEGER,
+            FOREIGN KEY(week_id) REFERENCES weeks(id)
             )
         '''
 
@@ -76,6 +77,7 @@ class Comment:
     def instance_from_db(cls, row):
         new_comment = cls(row[1], row[2])
         new_comment.id = row[0]
+        return new_comment
 
     @classmethod
     def get_all(cls):
