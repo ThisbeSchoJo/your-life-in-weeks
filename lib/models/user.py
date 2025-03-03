@@ -37,4 +37,38 @@ class User:
         days_lived = (today - self._birthdate).days #gets the number of days lived
         weeks_lived = (days_lived//7) #converts the days lived to weeks
         return weeks_lived
-        
+    
+    def weeks_left(self):
+        total_weeks = 90 * 52 #90 years * 52 weeks per year
+        weeks_lived = self.weeks_lived()
+        weeks_left = total_weeks - weeks_lived
+        return weeks_left
+    
+    @classmethod
+    def create_table(cls):
+        sql = '''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                birthdate TEXT
+            )
+        '''
+        CURSOR.execute(sql)
+
+    @classmethod
+    def drop_table(cls):
+        sql = '''
+            DROP TABLE IF EXISTS users
+        '''
+        CURSOR.execute(sql)
+    
+    def save(self):
+        sql = '''
+            INSERT INTO users (name, birthdate)
+            VALUES (?, ?)
+        '''
+        CURSOR.execute(sql, (self.name, self.birthdate.strftime("%Y-%m-%d")))
+        CONN.commit()
+        self.id = CURSOR.lastrowid
+        User.all.append(self)
+    
