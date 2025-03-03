@@ -72,3 +72,9 @@ class User:
         self.id = CURSOR.lastrowid
         User.all.append(self)
     
+    @classmethod
+    def create(cls, name, birthdate):
+        new_user = cls(name, birthdate)
+        new_user.save()
+        return new_user
+    
