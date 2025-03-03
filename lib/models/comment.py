@@ -100,6 +100,17 @@ class Comment:
             return cls.instance_from_db(row)
         else:
             return None
+        
+    def delete(self):
+        sql = '''
+            DELETE FROM comments
+            WHERE id = ?
+        '''
+
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        Comment.all = [comment for comment in Comment.all if comment.id != self.id]
 
     def __repr__(self):
         return f"<Comment: # {self.id} - Events: {self.events}, Category: {self.category}, Week ID: {self.week_id}>"
