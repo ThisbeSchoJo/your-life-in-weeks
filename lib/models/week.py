@@ -30,7 +30,7 @@ class Week:
     @date_getter.setter
     def date(self, value):
         # MIGHT NEED TO CHANGE VALUE DATA TYPE
-        if (type(value) == str) and (len(value) > 0):
+        if (type(value) == str) and (len(value) == 10):
             self._date = datetime.strptime(value, "%Y-%m-%d").date()
         else:
             raise Exception("Date must be a string and in YYYY-MM-DD format!")
