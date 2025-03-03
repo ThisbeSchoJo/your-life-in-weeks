@@ -78,3 +78,8 @@ class User:
         new_user.save()
         return new_user
     
+    @classmethod
+    def instance_from_db(cls, row):
+        new_user = cls(row[1], row[2], row[0])
+        return new_user
+    
