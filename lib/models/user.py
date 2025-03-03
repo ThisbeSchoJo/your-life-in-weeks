@@ -102,4 +102,15 @@ class User:
             return cls.instance_from_db(row)
         return None
     
-    
+    def delete(self):
+        sql = '''
+            DELETE FROM users
+            WHERE id = ?
+        '''
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        User.all = [user for user in User.all if user.id !=self.id]
+
+    def __repr__(self):
+        return f"<User #{self.id} - Name: {self.name}, Birthdate: {self.birthdate}>"
