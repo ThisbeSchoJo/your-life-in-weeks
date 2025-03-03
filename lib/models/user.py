@@ -32,3 +32,9 @@ class User:
         else:
             raise ValueError("Birthdate must be a string in YYYY-MM-DD format!")
         
+    def weeks_lived(self):
+        today = datetime.today().date()
+        days_lived = (today - self._birthdate).days #gets the number of days lived
+        weeks_lived = (days_lived//7) #converts the days lived to weeks
+        return weeks_lived
+        
