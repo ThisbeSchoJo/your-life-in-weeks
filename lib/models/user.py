@@ -83,3 +83,23 @@ class User:
         new_user = cls(row[1], row[2], row[0])
         return new_user
     
+    @classmethod
+    def get_all(cls):
+        sql = '''
+            SELECT * FROM users
+        '''
+        rows = CURSOR.execute(sql).fetchall()
+        cls.all = [cls.instance_from_db(row) for row in rows]
+
+    @classmethod
+    def find_by_id(cls, id):
+        sql = '''
+            SELECT * FROM users
+            WHERE id = ?
+        '''
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        if row:
+            return cls.instance_from_db(row)
+        return None
+    
+    
