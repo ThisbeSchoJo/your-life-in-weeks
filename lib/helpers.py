@@ -13,8 +13,8 @@ def interact_with_weeks_data():
             exit_program()
         elif choice == "1":
             get_all_weeks()
-        # elif choice == "2":
-        #     interact_with_comments_data()
+        elif choice == "2":
+            get_weeks_by_satisfaction()
         else:
             print("Invalid choice")
 
@@ -37,6 +37,11 @@ def get_all_weeks():
         print(f"Week ID: {week.id}, User: {user.name if user else 'Unknown'}, Date: {week.date}, Rating: {week.satisfaction_rating}, Summary: {week.comments}")
 
     input("\n--Enter any key to continue... --\n")
+
+def get_weeks_by_satisfaction():
+    print("\nEnter the minimum satisfaction rating for weeks displayed.\n")
+    min_rating  = input("> ")
+    Week.filter_weeks_by_satisfaction(min_rating)
 
 def interact_with_users_data():
     while True:
@@ -90,6 +95,7 @@ def week_menu():
     print("Please select an option:")
     print("0. Exit the program")
     print("1. Retrieve all weeks")
+    print("2. Retrieve weeks based on satisfaction rating")
     # print("2. Interact with comments data")
 
 def user_menu():

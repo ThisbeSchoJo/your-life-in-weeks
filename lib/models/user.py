@@ -72,10 +72,6 @@ class User:
         print(f"\nWeeks Lived: {weeks_lived} | Weeks Left: {weeks_left}")
         print(f"\n🟩: Weeks Lived (No Data Entry) | ⬜: Weeks Left | 💎: Weeks Logged (Data Entry)")
 
-    def filter_weeks_by_satisfaction(self, min_rating=5):
-        filtered_weeks = [week for week in self.weeks if week.ssatisfaction_rating > min_rating]
-        return filtered_weeks
-
     @classmethod
     def create_table(cls):
         sql = '''

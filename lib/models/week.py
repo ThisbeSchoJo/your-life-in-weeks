@@ -82,8 +82,8 @@ class Week:
         CURSOR.execute(sql)
 
     @classmethod
-    def create(cls, user, date, satisfaction_rating, comments):
-        new_week = cls(user.id, date, satisfaction_rating, comments)
+    def create(cls, user_id, date, satisfaction_rating, comments):
+        new_week = cls(user_id, date, satisfaction_rating, comments)
         new_week.save()
         return new_week
     
@@ -171,6 +171,18 @@ class Week:
 
         return [Comment.instance_from_db(row) for row in rows]
 
+    def filter_weeks_by_satisfaction(self, min_rating=5):
+        Week.get_all()
+        for week in Week.all:
+            if week.satisfaction_rating >= min_rating:
+                user = User.find_by_id(week.user_id)
+                print(f"Week ID: {week.id}, User: {user.name}, Date: {week.date}, Saisfaction Rating: {week.satisfaction_rating}/10")
+                print(f"Week summary: {week.comments}")
+                print("-" *40) #Adds a separator line
+        # filtered_weeks = [week for week in Week.all if week.satisfaction_rating > min_rating]
+        # print(filtered_weeks)
+        # return filtered_weeks
+    
     def __repr__(self):
         user = User.find_by_id(self.user_id)
         return f"<Week {self.id} - User: {user.name if user else 'Unknown'}, Date: {self.date}, Satisfaction Rating: {self.satisfaction_rating}, Comments: {self.comments}>"
