@@ -28,12 +28,13 @@ def create_user():
         raise Exception(f"Error creating User {user.name}!")
 
 def get_all_weeks():
-    Week.get_all()
+    weeks = Week.get_all()
 
     print("Here is the data for all weeks:\n")
 
-    for week in Week.all:
-        print(f"Week ID: {week.id}, User: {week.user}, Date: {week.date}, Rating: {week.satisfaction_rating}, Summary: {week.comments}")
+    for week in weeks:
+        user = User.find_by_id(week.user_id)
+        print(f"Week ID: {week.id}, User: {user.name if user else 'Unknown'}, Date: {week.date}, Rating: {week.satisfaction_rating}, Summary: {week.comments}")
 
     input("\n--Enter any key to continue... --\n")
 

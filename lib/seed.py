@@ -9,9 +9,9 @@ def seed_database():
     Week.create_table()
     User.create_table()
 
-    Week.create("Thisbe", 12025, 1, "bad time")
-    Week.create("Thisbe", 22025, 9, "started classes!")
-    Week.create("Thisbe", 32025, 8, "Enjoying all the change!")
+    Week.create(1, "2025-01-01", 1, "bad time")
+    Week.create(1, "2025-01-10", 9, "started classes!")
+    Week.create(1, "2025-03-01", 8, "Enjoying all the change!")
 
     User.create("Thisbe", "1995-10-04")
     User.create("Sydney", "1998-02-14")

@@ -6,25 +6,24 @@ class Week:
 
     all = []
     
-    def __init__(self, user, date, satisfaction_rating, comments):
-        self.user = user
-        self.user_id = user.id
+    def __init__(self, user_id, date, satisfaction_rating, comments):
+        # self.user = user
+        self.user_id = user_id
         self.date = date
         self.satisfaction_rating = satisfaction_rating
         self.comments = comments
         self.id = None
 
     @property
-    def user_getter(self):
-        return self._user
+    def user_id_getter(self):
+        return self._user_id
     
-    @user_getter.setter
-    def user(self, value):
-        if (isinstance(value, User)):
-            self._user = value
-            self.user_id = value.id
+    @user_id_getter.setter
+    def user_id(self, value):
+        if (isinstance(value, int)):
+            self._user_id = value
         else:
-            raise Exception("Error: User must be an instance of the User class!")
+            raise Exception("Error: User must be an integer!")
         
     @property
     def date_getter(self):
@@ -88,16 +87,24 @@ class Week:
 
     @classmethod
     def create(cls, user, date, satisfaction_rating, comments):
-        new_week = cls(user, date, satisfaction_rating, comments)
+        new_week = cls(user.id, date, satisfaction_rating, comments)
         new_week.save()
         return new_week
     
     @classmethod
     def instance_from_db(cls, row):
-        user = User.find_by_id(row[1])
-        new_week = cls(user, row[2], row[3], row[4])
-        new_week.id = row[0]
-        return new_week
+        user_id = row[1] #Get user_id from the database row
+        user = User.find_by_id(user_id) #Fetch the actual User instance
+        if user is None:
+            raise Exception(f"Error: No User found with ID {user_id}")
+        week = cls(user.id, row[2], row[3], row[4])
+        week.id = row[0]
+        return week
+        # return cls(user.id, row[2], row[3], row[4]) #Pass the actual User instance
+        # user = User.find_by_id(row[1])
+        # new_week = cls(user, row[2], row[3], row[4])
+        # new_week.id = row[0]
+        # return new_week
 
     @classmethod
     def get_all(cls):
@@ -108,6 +115,8 @@ class Week:
         rows = CURSOR.execute(sql).fetchall()
 
         cls.all = [cls.instance_from_db(row) for row in rows]
+
+        return cls.all
 
     @classmethod
     def find_by_id(cls, id):
@@ -148,5 +157,6 @@ class Week:
 
 
     def __repr__(self):
-        return f"<Week {self.id} - User: {self.user}, Date: {self.date}, Satisfaction Rating: {self.satisfaction_rating}, Comments: {self.comments}>"
+        user = User.find_by_id(self.user_id)
+        return f"<Week {self.id} - User: {user.name if user else 'Unknown'}, Date: {self.date}, Satisfaction Rating: {self.satisfaction_rating}, Comments: {self.comments}>"
     
