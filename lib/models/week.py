@@ -31,7 +31,6 @@ class Week:
     
     @date_getter.setter
     def date(self, value):
-        # MIGHT NEED TO CHANGE VALUE DATA TYPE
         if (type(value) == str) and (len(value) == 10):
             self._date = datetime.strptime(value, "%Y-%m-%d").date()
         else:
@@ -48,7 +47,16 @@ class Week:
         else:
             raise Exception("Error: Satisfaction rating must be an integer between 1 and 10!")
         
-    # NEED TO ADD THE OTHER PROPERTIES
+    @property
+    def comments_getter(self):
+        return self._comments
+    
+    @comments_getter.setter
+    def comments(self, value):
+        if (type(value) == str) and (len(value) > 0):
+            self._comments = value
+        else:
+            raise Exception("Comments must be a string at least 1 character long!")
 
     @classmethod
     def create_table(cls):
