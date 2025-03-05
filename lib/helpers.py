@@ -66,7 +66,10 @@ def get_all_users():
 def select_user_to_see_life_in_weeks():
     # input to select user
     # call a function in User that will display that user's life in weeks
-    print("Please enter the name of a user you would whose life you would like to see in weeks.")
+    User.get_all()
+    for user in User.all:
+        print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
+    print("\nPlease enter the name of a user you would whose life you would like to see in weeks.\n")
     selected_user = input("> ")
     print(f"{selected_user}'s life in weeks is loading...")
     input("\n--Enter any key to continue... --\n")
