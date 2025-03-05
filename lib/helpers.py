@@ -1,6 +1,7 @@
 # lib/helpers.py
 from models.week import Week
 from models.user import User
+from PIL import Image
 # from models.comment import Comment
 
 
@@ -65,14 +66,19 @@ def select_user_to_see_life_in_weeks():
     User.get_all()
     for user in User.all:
         print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
-    print("\nPlease enter the id of a user you would whose life you would like to see in weeks.\n")
+    print("\nPlease enter the id of a user whose life you would like to see in weeks.\n")
     selected_user_id = input("> ")
     print(f"{selected_user_id}'s life in weeks is loading...")
-    User.find_by_id(selected_user_id)
+    # User.find_by_id(selected_user_id)
+    User.display_life_calendar(selected_user_id)
     input("\n--Enter any key to continue... --\n")
 
 def exit_program():
     print("Goodbye!")
+    img = Image.open("lib/diamond_spoon.png")  
+    img.show()  # Opens with the system’s default image viewer
+
+    print("Life is precious. Collect your diamonds wisely.")
     exit()
 
 def week_menu():

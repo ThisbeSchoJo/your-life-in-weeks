@@ -14,11 +14,11 @@ def main():
     User.create_table()
     Week.create_table()
 
-    print("Welcome to Your Life in Weeks!")
+    print("\nWelcome to Your Life in Weeks!\n")
     while True:
         
         menu()
-        
+
         choice = input("> ")
 
         if choice == "0":
