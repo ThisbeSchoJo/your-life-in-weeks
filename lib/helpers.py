@@ -69,9 +69,14 @@ def select_user_to_see_life_in_weeks():
         print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
     print("\nPlease enter the id of a user whose life you would like to see in weeks.\n")
     selected_user_id = input("> ")
-    print(f"{selected_user_id}'s life in weeks is loading...")
+    selected_user = User.find_by_id(selected_user_id)
+    print(f"{selected_user}'s life in weeks is loading...")
+    if selected_user:
+        selected_user.print_life_in_weeks()
+    else:
+        print("User not found")
     # User.find_by_id(selected_user_id)
-    User.display_life_calendar(selected_user_id)
+    # User.print_life_in_weeks(selected_user_id)
     input("\n--Enter any key to continue... --\n")
 
 def exit_program():

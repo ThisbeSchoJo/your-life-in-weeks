@@ -40,22 +40,27 @@ class User:
         return weeks_lived
     
     def weeks_left(self):
-        total_weeks = 90 * 52 #90 years * 52 weeks per year
+        total_weeks = 60 * 52 #60 years * 52 weeks per year
         weeks_lived = self.weeks_lived()
         weeks_left = total_weeks - weeks_lived
         return weeks_left
     
     def print_life_in_weeks(self):
         weeks_lived = self.weeks_lived()
+        # print(f"weeks lived: {weeks_lived}")
         weeks_left = self.weeks_left()
-        total_weeks = 90 * 52
-        life_calendar = ["💎" if i < weeks_lived else "O" for i in range(total_weeks)]
+        # print(f"weeks left: {weeks_left}")
+        total_weeks = 60 * 52
+        # print(total_weeks)
+        life_calendar = ["🟩" if i < weeks_lived else "⬜" for i in range(total_weeks)]
+        age = 1
 
         # print life in a grid format (e.g., 52 weeks per row for a yearly visualization)
         for i in range(0, total_weeks, 52):
-            print(" ".join(life_calendar[i:i+52]))
+            print("".join(life_calendar[i:i+52]) + f" - {age}")
+            age += 1
         
-        print(f"\n💎: Weeks Lived ({weeks_lived} | O: Weeks Left ({weeks_left}))")
+        print(f"\n🟩: Weeks Lived ({weeks_lived}) | ⬜: Weeks Left ({weeks_left}))")
 
 
     @classmethod
