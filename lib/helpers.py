@@ -80,11 +80,10 @@ def select_user_to_see_life_in_weeks():
     input("\n--Enter any key to continue... --\n")
 
 def exit_program():
-    print("Goodbye!")
+    print("Life is precious. Collect your diamonds wisely.")
     img = Image.open("lib/diamond_spoon.png")  
     img.show()  # Opens with the system’s default image viewer
 
-    print("Life is precious. Collect your diamonds wisely.")
     exit()
 
 def week_menu():

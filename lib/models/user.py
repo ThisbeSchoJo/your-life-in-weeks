@@ -47,21 +47,34 @@ class User:
     
     def print_life_in_weeks(self):
         weeks_lived = self.weeks_lived()
-        # print(f"weeks lived: {weeks_lived}")
         weeks_left = self.weeks_left()
-        # print(f"weeks left: {weeks_left}")
         total_weeks = 80 * 52
-        # print(total_weeks)
-        life_calendar = ["🟩" if i < weeks_lived else "⬜" for i in range(total_weeks)]
-        age = 1
+        life_calendar = ["⬜" for i in range(total_weeks)]  # Default to white square for all weeks
 
-        # print life in a grid format (e.g., 52 weeks per row for a yearly visualization)
+        # Fetch all the weeks logged by the user
+        logged_weeks = self.weeks()
+
+        # Loop over all weeks lived and replace with correct emojis
+        for week_num in range(weeks_lived):
+            if week_num < weeks_lived:
+                # Check if this week has been logged (has data entry)
+                if week_num in [((week.date - self.birthdate).days // 7) for week in logged_weeks]:
+                    life_calendar[week_num] = "💎"  # Data entry exists, replace with diamond emoji
+                else:
+                    life_calendar[week_num] = "🟩"  # No data entry, replace with green square emoji
+
+        # Print life in a grid format (e.g., 52 weeks per row for a yearly visualization)
+        age = 1
         for i in range(0, total_weeks, 52):
             print("".join(life_calendar[i:i+52]) + f" - {age}")
             age += 1
-        
-        print(f"\n🟩: Weeks Lived ({weeks_lived}) | ⬜: Weeks Left ({weeks_left}))")
 
+        print(f"\nWeeks Lived: {weeks_lived} | Weeks Left: {weeks_left}")
+        print(f"\n🟩: Weeks Lived (No Data Entry) | ⬜: Weeks Left | 💎: Weeks Logged (Data Entry)")
+
+    def filter_weeks_by_satisfaction(self, min_rating=5):
+        filtered_weeks = [week for week in self.weeks if week.ssatisfaction_rating > min_rating]
+        return filtered_weeks
 
     @classmethod
     def create_table(cls):
