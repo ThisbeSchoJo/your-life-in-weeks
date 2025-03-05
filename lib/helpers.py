@@ -70,7 +70,7 @@ def select_user_to_see_life_in_weeks():
     print("\nPlease enter the id of a user whose life you would like to see in weeks.\n")
     selected_user_id = input("> ")
     selected_user = User.find_by_id(selected_user_id)
-    print(f"{selected_user}'s life in weeks is loading...")
+    print(f"{selected_user.name}'s life in weeks:")
     if selected_user:
         selected_user.print_life_in_weeks()
     else:

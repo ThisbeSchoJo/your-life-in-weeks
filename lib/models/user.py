@@ -40,7 +40,7 @@ class User:
         return weeks_lived
     
     def weeks_left(self):
-        total_weeks = 60 * 52 #60 years * 52 weeks per year
+        total_weeks = 80 * 52 #80 years * 52 weeks per year
         weeks_lived = self.weeks_lived()
         weeks_left = total_weeks - weeks_lived
         return weeks_left
@@ -50,7 +50,7 @@ class User:
         # print(f"weeks lived: {weeks_lived}")
         weeks_left = self.weeks_left()
         # print(f"weeks left: {weeks_left}")
-        total_weeks = 60 * 52
+        total_weeks = 80 * 52
         # print(total_weeks)
         life_calendar = ["🟩" if i < weeks_lived else "⬜" for i in range(total_weeks)]
         age = 1
