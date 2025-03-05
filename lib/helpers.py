@@ -26,10 +26,6 @@ def create_user():
     except:
         raise Exception(f"Error creating User {user.name}!")
 
-def create_burgers_table():
-    Burger.create_table()
-
-
 def get_all_weeks():
     Week.get_all()
 
@@ -69,9 +65,10 @@ def select_user_to_see_life_in_weeks():
     User.get_all()
     for user in User.all:
         print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
-    print("\nPlease enter the name of a user you would whose life you would like to see in weeks.\n")
-    selected_user = input("> ")
-    print(f"{selected_user}'s life in weeks is loading...")
+    print("\nPlease enter the id of a user you would whose life you would like to see in weeks.\n")
+    selected_user_id = input("> ")
+    print(f"{selected_user_id}'s life in weeks is loading...")
+    User.find_by_id(selected_user_id)
     input("\n--Enter any key to continue... --\n")
 
 def exit_program():

@@ -45,6 +45,19 @@ class User:
         weeks_left = total_weeks - weeks_lived
         return weeks_left
     
+    def print_life_in_weeks(self):
+        weeks_lived = self.weeks_lived()
+        weeks_left = self.weeks_left()
+        total_weeks = 90 * 52
+        life_calendar = ["X" if i < weeks_lived else "O" for i in range(total_weeks)]
+
+        # print life in a grid format (e.g., 52 weeks per row for a yearly visualization)
+        for i in range(0, total_weeks, 52):
+            print(" ".join(life_calendar[i:i+52]))
+        
+        print(f"\nX: Weeks Lived ({weeks_lived} | O: Weeks Left ({weeks_left}))")
+
+
     @classmethod
     def create_table(cls):
         sql = '''
