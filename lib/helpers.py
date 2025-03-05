@@ -2,8 +2,6 @@
 from models.week import Week
 from models.user import User
 from PIL import Image
-# from models.comment import Comment
-
 
 def interact_with_weeks_data():
     while True:
@@ -43,6 +41,9 @@ def get_weeks_by_satisfaction():
     min_rating  = input("> ")
     Week.filter_weeks_by_satisfaction(min_rating)
 
+    input("\n--Enter any key to continue... --\n")
+
+
 def interact_with_users_data():
     while True:
         user_menu()
@@ -53,6 +54,8 @@ def interact_with_users_data():
             get_all_users()
         elif choice == "2":
             select_user_to_see_life_in_weeks()
+        elif choice == "3":
+            create_user()
         else:
             print("Invalid choice")
 
@@ -103,5 +106,6 @@ def user_menu():
     print("0. Exit the program")
     print("1. Retrieve all users")
     print("2. Select user to see their life in weeks")
+    print("3. Create a new user")
     # print("2. Interact with comments data")
 

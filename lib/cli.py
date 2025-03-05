@@ -27,8 +27,6 @@ def main():
             interact_with_weeks_data()
         elif choice == "2":
             interact_with_users_data()
-        elif choice == "3":
-            create_user()
         else:
             print("Invalid choice")
 

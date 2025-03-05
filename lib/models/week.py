@@ -179,9 +179,6 @@ class Week:
                 print(f"Week ID: {week.id}, User: {user.name}, Date: {week.date}, Saisfaction Rating: {week.satisfaction_rating}/10")
                 print(f"Week summary: {week.comments}")
                 print("-" *40) #Adds a separator line
-        # filtered_weeks = [week for week in Week.all if week.satisfaction_rating > min_rating]
-        # print(filtered_weeks)
-        # return filtered_weeks
     
     def __repr__(self):
         user = User.find_by_id(self.user_id)
