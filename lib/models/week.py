@@ -1,5 +1,6 @@
 from datetime import datetime
 from models.__init__ import CONN, CURSOR
+from models.user import User
 
 class Week:
 
@@ -7,6 +8,7 @@ class Week:
     
     def __init__(self, user, date, satisfaction_rating, comments):
         self.user = user
+        self.user_id = user.id
         self.date = date
         self.satisfaction_rating = satisfaction_rating
         self.comments = comments
@@ -18,10 +20,11 @@ class Week:
     
     @user_getter.setter
     def user(self, value):
-        if (type(value) == str) and (len(value) > 4):
+        if (isinstance(value, User)):
             self._user = value
+            self.user_id = value.id
         else:
-            raise Exception("Error: User must be a string that is at least 5 characters long!")
+            raise Exception("Error: User must be an instance of the User class!")
         
     @property
     def date_getter(self):
@@ -53,10 +56,11 @@ class Week:
         sql = '''
             CREATE TABLE IF NOT EXISTS weeks (
                 id INTEGER PRIMARY KEY,
-                user TEXT,
+                user_id INTEGER,
                 date TEXT,
                 satisfaction_rating INTEGER,
-                comments TEXT
+                comments TEXT,
+                FOREIGN KEY (user_id) REFERENCES users(id)
             )
         '''
 
@@ -72,11 +76,11 @@ class Week:
 
     def save(self):
         sql = '''
-            INSERT INTO weeks (user, date, satisfaction_rating, comments) 
+            INSERT INTO weeks (user_id, date, satisfaction_rating, comments) 
             VALUES (?, ?, ?, ?)
         '''
 
-        CURSOR.execute(sql, (self.user, self.date.strftime("%Y-%m-%d"), self.satisfaction_rating, self.comments))
+        CURSOR.execute(sql, (self.user_id, self.date.strftime("%Y-%m-%d"), self.satisfaction_rating, self.comments))
         CONN.commit()
         self.id = CURSOR.lastrowid
 
@@ -90,7 +94,8 @@ class Week:
     
     @classmethod
     def instance_from_db(cls, row):
-        new_week = cls(row[1], row[2], row[3], row[4])
+        user = User.find_by_id(row[1])
+        new_week = cls(user, row[2], row[3], row[4])
         new_week.id = row[0]
         return new_week
 

@@ -1,5 +1,6 @@
 from datetime import datetime
 from models.__init__ import CONN, CURSOR
+# from models.week import Week
 
 class User:
 
@@ -23,7 +24,7 @@ class User:
         
     @property
     def birthdate_getter(self):
-        return self.birthdate
+        return self._birthdate
     
     @birthdate_getter.setter
     def birthdate(self, value):
@@ -111,6 +112,14 @@ class User:
         CONN.commit()
 
         User.all = [user for user in User.all if user.id !=self.id]
+
+    def weeks(self):
+        from models.week import Week #local import to avoid circula import 
+        sql = '''
+            SELECT * FROM weeks WHERE user_id = ?
+        '''
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Week.instance_from_db(row) for row in rows]
 
     def __repr__(self):
         return f"<User #{self.id} - Name: {self.name}, Birthdate: {self.birthdate}>"

@@ -1,7 +1,7 @@
 # lib/helpers.py
 from models.week import Week
 from models.user import User
-from models.comment import Comment
+# from models.comment import Comment
 
 
 def interact_with_weeks_data():
@@ -17,19 +17,32 @@ def interact_with_weeks_data():
         else:
             print("Invalid choice")
 
+def create_user():
+    name = input("Enter name: ")
+    birthdate = input("Enter birthdate (YYYY-MM-DD): ")
+    try:
+        user = User.create(name, birthdate)
+        print(f"User {user.name} created successfully with ID {user.id}")
+    except:
+        raise Exception(f"Error creating User {user.name}!")
+
+def create_burgers_table():
+    Burger.create_table()
+
+
 def get_all_weeks():
     Week.get_all()
 
     print("Here is the data for all weeks:\n")
 
     for week in Week.all:
-        print(week)
+        print(f"Week ID: {week.id}, User: {week.user}, Date: {week.date}, Rating: {week.satisfaction_rating}, Summary: {week.comments}")
 
     input("\n--Enter any key to continue... --\n")
 
 def interact_with_users_data():
     while True:
-        comment_menu()
+        user_menu()
         choice = input("> ")
         if choice == "0":
             exit_program()
@@ -46,7 +59,7 @@ def get_all_users():
     print("Here is the data for all users:\n")
 
     for user in User.all:
-        print(user)
+        print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
 
     input("\n--Enter any key to continue... --\n")
 
