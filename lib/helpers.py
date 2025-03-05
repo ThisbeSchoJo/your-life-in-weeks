@@ -48,8 +48,8 @@ def interact_with_users_data():
             exit_program()
         elif choice == "1":
             get_all_users()
-        # elif choice == "2":
-        #     interact_with_comments_data()
+        elif choice == "2":
+            select_user_to_see_life_in_weeks()
         else:
             print("Invalid choice")
 
@@ -61,6 +61,14 @@ def get_all_users():
     for user in User.all:
         print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
 
+    input("\n--Enter any key to continue... --\n")
+
+def select_user_to_see_life_in_weeks():
+    # input to select user
+    # call a function in User that will display that user's life in weeks
+    print("Please enter the name of a user you would whose life you would like to see in weeks.")
+    selected_user = input("> ")
+    print(f"{selected_user}'s life in weeks is loading...")
     input("\n--Enter any key to continue... --\n")
 
 def exit_program():
@@ -77,5 +85,6 @@ def user_menu():
     print("Please select an option:")
     print("0. Exit the program")
     print("1. Retrieve all users")
+    print("2. Select user to see their life in weeks")
     # print("2. Interact with comments data")
 
