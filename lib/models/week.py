@@ -81,18 +81,6 @@ class Week:
 
         CURSOR.execute(sql)
 
-    def save(self):
-        sql = '''
-            INSERT INTO weeks (user_id, date, satisfaction_rating, comments) 
-            VALUES (?, ?, ?, ?)
-        '''
-
-        CURSOR.execute(sql, (self.user_id, self.date.strftime("%Y-%m-%d"), self.satisfaction_rating, self.comments))
-        CONN.commit()
-        self.id = CURSOR.lastrowid
-
-        Week.all.append(self)
-
     @classmethod
     def create(cls, user, date, satisfaction_rating, comments):
         new_week = cls(user.id, date, satisfaction_rating, comments)
@@ -108,11 +96,6 @@ class Week:
         week = cls(user.id, row[2], row[3], row[4])
         week.id = row[0]
         return week
-        # return cls(user.id, row[2], row[3], row[4]) #Pass the actual User instance
-        # user = User.find_by_id(row[1])
-        # new_week = cls(user, row[2], row[3], row[4])
-        # new_week.id = row[0]
-        # return new_week
 
     @classmethod
     def get_all(cls):
@@ -138,6 +121,32 @@ class Week:
         if row:
             return cls.instance_from_db(row)
         return None
+    
+    def calculate_week_number(self):
+        # Fetch user's birthdate
+        user = User.find_by_id(self.user_id)
+        if user is None:
+            raise Exception(f"User with ID {self.user_id} not found!")
+        
+        # Get number of weeks the user has lived
+        weeks_lived = user.weeks_lived()
+
+        # Calculate the difference in weeks between the user's birthdate and the logged week date
+        days_since_birth = (self.date - user.birthdate).days
+        weeks_since_birth = days_since_birth // 7
+        return weeks_since_birth
+
+    def save(self):
+        sql = '''
+            INSERT INTO weeks (user_id, date, satisfaction_rating, comments) 
+            VALUES (?, ?, ?, ?)
+        '''
+
+        CURSOR.execute(sql, (self.user_id, self.date.strftime("%Y-%m-%d"), self.satisfaction_rating, self.comments))
+        CONN.commit()
+        self.id = CURSOR.lastrowid
+
+        Week.all.append(self)
 
     def delete(self):
         sql = '''
@@ -150,7 +159,6 @@ class Week:
 
         Week.all = [week for week in Week.all if week.id != self.id]
 
-
     def comment(self):
         from models.comment import Comment
 
@@ -162,7 +170,6 @@ class Week:
         rows = CURSOR.execute(sql, (self.id,)).fetchall()
 
         return [Comment.instance_from_db(row) for row in rows]
-
 
     def __repr__(self):
         user = User.find_by_id(self.user_id)
