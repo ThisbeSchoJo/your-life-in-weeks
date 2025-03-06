@@ -3,7 +3,6 @@ from models.week import Week
 from models.user import User
 from PIL import Image
 from rich.console import Console
-from rich.text import Text
 
 console = Console()
 def interact_with_weeks_data():

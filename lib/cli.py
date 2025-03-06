@@ -1,6 +1,5 @@
 # lib/cli.py
 from rich.console import Console
-from rich.text import Text
 
 from helpers import (
     exit_program,
@@ -18,8 +17,6 @@ def main():
     console.print("[bold cyan]\nWelcome to Your Life in Weeks![/bold cyan]\n")
     console.input("[black]--Press any key to continue...--[/black]")
     console.print("[italic cyan]It kind of feels like our lives are made up of a countless number of weeks.[italic cyan]\n")
-    # console.print("[italic cyan]We imagine we will walk our dogs a hundred more times, \nwe agonize over something embarrassing we said, \nwe tell ourselves we'll finally ask out the barista next time, \nwe forget to return our sister's phone call, \nour plans never make it out of the friend's group chat, \nwe make shallow small talk and forget to listen when others respond, \nwe tell ourselves we will go skydiving *someday*, \nwe hold off saying 'I love you' because it is too soon, \nwe get annoyed with our mother's nagging, \nwe think 'how's work?' is enough with our father, \nwe stay at a job that makes us miserable for fear of change. [italic cyan]\n")
-    # input("\n--Enter any key to continue... --\n")
     console.print("[italic cyan]A million moments pass us by unnoticed, unappreciated, or untouched, because we think we have unlimited time.[italic cyan]\n")
     console.print("[italic cyan]Each passing week can feel like a drop in the bucket of our time. [italic cyan]\n")
     console.input("[black]--Press any key to continue...--[/black]")
@@ -43,8 +40,8 @@ def main():
 
 def menu():
     print("Please select an option:")
-    print("1. Interact with weeks data")
-    print("2. Interact with users data")
+    print("1. Check out weeks' data")
+    print("2. Mess with users' data")
     print("3. Exit the program")
 
 if __name__ == "__main__":
