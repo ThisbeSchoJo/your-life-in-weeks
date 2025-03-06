@@ -7,8 +7,6 @@ def interact_with_weeks_data():
     while True:
         week_menu()
         choice = input("> ")
-        # if choice == "0":
-        #     exit_program()
         if choice == "1":
             get_all_weeks()
         elif choice == "2":
@@ -46,7 +44,6 @@ def get_weeks_by_user():
     except ValueError:
         print("Error: Please enter a valid integer for the user ID.")
         return
-    # print(selected_user_id)
     Week.filter_weeks_by_user(selected_user_id)
 
     input("\n--Enter any key to continue... --\n")
@@ -88,8 +85,7 @@ def select_user_to_see_life_in_weeks():
         selected_user.print_life_in_weeks()
     else:
         print("User not found")
-    # User.find_by_id(selected_user_id)
-    # User.print_life_in_weeks(selected_user_id)
+
     input("\n--Enter any key to continue... --\n")
 
 def create_user():
@@ -110,19 +106,15 @@ def exit_program():
 
 def week_menu():
     print("Please select an option:")
-    # print("0. Exit the program")
     print("1. Retrieve all weeks")
     print("2. Retrieve weeks based on satisfaction rating")
     print("3. Retrieve weeks for a specific user")
     print("4. Exit the program")
-    # print("2. Interact with comments data")
 
 def user_menu():
     print("Please select an option:")
-    # print("0. Exit the program")
     print("1. Retrieve all users")
     print("2. Select user to see their life in weeks")
     print("3. Create a new user")
     print("4. Exit the program")
-    # print("2. Interact with comments data")
 

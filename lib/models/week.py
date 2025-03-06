@@ -7,7 +7,6 @@ class Week:
     all = []
     
     def __init__(self, user_id, date, satisfaction_rating, comments):
-        # self.user = user
         self.user_id = user_id
         self.date = date
         self.satisfaction_rating = satisfaction_rating

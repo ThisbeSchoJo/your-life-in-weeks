@@ -32,7 +32,57 @@ class User:
             self._birthdate = datetime.strptime(value, "%Y-%m-%d").date()
         else:
             raise ValueError("Birthdate must be a string in YYYY-MM-DD format!")
-        
+
+    @classmethod
+    def create_table(cls):
+        sql = '''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                birthdate TEXT
+            )
+        '''
+        CURSOR.execute(sql)
+
+    @classmethod
+    def drop_table(cls):
+        sql = '''
+            DROP TABLE IF EXISTS users
+        '''
+        CURSOR.execute(sql)
+    
+    @classmethod
+    def create(cls, name, birthdate):
+        new_user = cls(name, birthdate)
+        new_user.save()
+        return new_user
+    
+    @classmethod
+    def instance_from_db(cls, row):
+        new_user = cls(row[1], row[2], row[0])
+        return new_user
+    
+    @classmethod
+    def get_all(cls):
+        sql = '''
+            SELECT * FROM users
+        '''
+        rows = CURSOR.execute(sql).fetchall()
+        cls.all = [cls.instance_from_db(row) for row in rows]
+
+    @classmethod
+    def find_by_id(cls, id):
+        sql = '''
+            SELECT * FROM users
+            WHERE id = ?
+        '''
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        if row:
+            return cls.instance_from_db(row)
+        else:
+            print("User not found.")
+            return None
+
     def weeks_lived(self):
         today = datetime.today().date()
         days_lived = (today - self._birthdate).days #gets the number of days lived
@@ -71,66 +121,6 @@ class User:
 
         print(f"\nWeeks Lived: {weeks_lived} | Weeks Left: {weeks_left}")
         print(f"\n🟩: Weeks Lived (No Data Entry) | ⬜: Weeks Left | 💎: Weeks Logged (Data Entry)")
-
-    @classmethod
-    def create_table(cls):
-        sql = '''
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY,
-                name TEXT,
-                birthdate TEXT
-            )
-        '''
-        CURSOR.execute(sql)
-
-    @classmethod
-    def drop_table(cls):
-        sql = '''
-            DROP TABLE IF EXISTS users
-        '''
-        CURSOR.execute(sql)
-    
-    def save(self):
-        sql = '''
-            INSERT INTO users (name, birthdate)
-            VALUES (?, ?)
-        '''
-        CURSOR.execute(sql, (self.name, self.birthdate.strftime("%Y-%m-%d")))
-        CONN.commit()
-        self.id = CURSOR.lastrowid
-        User.all.append(self)
-    
-    @classmethod
-    def create(cls, name, birthdate):
-        new_user = cls(name, birthdate)
-        new_user.save()
-        return new_user
-    
-    @classmethod
-    def instance_from_db(cls, row):
-        new_user = cls(row[1], row[2], row[0])
-        return new_user
-    
-    @classmethod
-    def get_all(cls):
-        sql = '''
-            SELECT * FROM users
-        '''
-        rows = CURSOR.execute(sql).fetchall()
-        cls.all = [cls.instance_from_db(row) for row in rows]
-
-    @classmethod
-    def find_by_id(cls, id):
-        sql = '''
-            SELECT * FROM users
-            WHERE id = ?
-        '''
-        row = CURSOR.execute(sql, (id,)).fetchone()
-        if row:
-            return cls.instance_from_db(row)
-        else:
-            print("User not found.")
-            return None
     
     def delete(self):
         sql = '''
@@ -141,6 +131,16 @@ class User:
         CONN.commit()
 
         User.all = [user for user in User.all if user.id !=self.id]
+
+    def save(self):
+        sql = '''
+            INSERT INTO users (name, birthdate)
+            VALUES (?, ?)
+        '''
+        CURSOR.execute(sql, (self.name, self.birthdate.strftime("%Y-%m-%d")))
+        CONN.commit()
+        self.id = CURSOR.lastrowid
+        User.all.append(self)
 
     def weeks(self):
         from models.week import Week #local import to avoid circula import 
