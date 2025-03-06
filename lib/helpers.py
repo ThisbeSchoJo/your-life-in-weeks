@@ -2,7 +2,10 @@
 from models.week import Week
 from models.user import User
 from PIL import Image
+from rich.console import Console
+from rich.text import Text
 
+console = Console()
 def interact_with_weeks_data():
     while True:
         week_menu()
@@ -27,14 +30,14 @@ def get_all_weeks():
         user = User.find_by_id(week.user_id)
         print(f"Week ID: {week.id}, User: {user.name if user else 'Unknown'}, Date: {week.date}, Rating: {week.satisfaction_rating}, Summary: {week.comments}")
 
-    input("\n--Enter any key to continue... --\n")
+    console.input("[black]--Press any key to continue...--[/black]")
 
 def get_weeks_by_satisfaction():
     print("\nEnter the minimum satisfaction rating for weeks displayed.\n")
     min_rating  = input("> ")
     Week.filter_weeks_by_satisfaction(min_rating)
 
-    input("\n--Enter any key to continue... --\n")
+    console.input("[black]--Press any key to continue...--[/black]")
 
 def get_weeks_by_user():
     print("\nEnter the user id for the user whose weeks you would like to display.\n")
@@ -46,7 +49,7 @@ def get_weeks_by_user():
         return
     Week.filter_weeks_by_user(selected_user_id)
 
-    input("\n--Enter any key to continue... --\n")
+    console.input("[black]--Press any key to continue...--[/black]")
 
 def interact_with_users_data():
     while True:
@@ -71,10 +74,11 @@ def get_all_users():
     for user in User.all:
         print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
 
-    input("\n--Enter any key to continue... --\n")
+    console.input("[black]--Press any key to continue...--[/black]")
 
 def select_user_to_see_life_in_weeks():
     User.get_all()
+
     for user in User.all:
         print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
     print("\nPlease enter the id of a user whose life you would like to see in weeks.\n")
@@ -86,14 +90,14 @@ def select_user_to_see_life_in_weeks():
     else:
         print("User not found")
 
-    input("\n--Enter any key to continue... --\n")
+    console.input("[black]--Press any key to continue...--[/black]")
 
-    print("Sometimes life seems really short, and other times it seems impossibly long.\n")
-    print("But this chart is meant to emphasize that it's certainly finite.\n")
-    print("Those weeks are all you have.\n")
-    print("Given that fact, the only appropriate word to describe your weeks is precious.")
+    console.print("[italic cyan]Sometimes life seems really short, and other times it seems impossibly long.\n[italic cyan]")
+    console.print("[italic cyan]But this chart is meant to emphasize that it's certainly finite.\n[italic cyan]")
+    console.print("[italic cyan]Those weeks are all you have.\n[italic cyan]")
+    console.print("[italic cyan]Given that fact, the only appropriate word to describe your weeks is precious.[italic cyan]")
 
-    input("\n--Enter any key to continue... --\n")
+    console.input("[black]--Press any key to continue...--[/black]")
 
 def create_user():
     name = input("Enter name: ")
@@ -105,11 +109,12 @@ def create_user():
         raise Exception(f"Error creating User {user.name}!")
     
 def exit_program():
-    print("There are trillions upon trillions of weeks in eternity, and this grid is your tiny handful.\n")
-    print("Imagine each of your weeks is a small, .05 carat diamond.\n")
-    print("If you multiply the volume of a .05 carat diamond by the number of weeks in 90 years (4,680), it adds up to just under a tablespoon.\n")
-    print("Are you making the most of your weeks?")
-    input("\n--Enter any key to continue... --\n")
+
+    console.print("[italic bold cyan]\nThere are trillions upon trillions of weeks in eternity, and this grid is your tiny handful.\n[italic bold cyan]")
+    console.print("[italic bold cyan]Imagine each of your weeks is a small, .05 carat diamond.\n[italic bold cyan]")
+    console.print("[italic bold cyan]If you multiply the volume of a .05 carat diamond by the number of weeks in 90 years (4,680), it adds up to just under a tablespoon.\n[italic bold cyan]")
+    console.print("[italic bold cyan]Are you making the most of your weeks?\n[italic bold cyan]")
+    console.input("[black]--Press any key to continue...--[/black]")
     img = Image.open("lib/diamond_spoon.png")  
     img.show()  # Opens with the system’s default image viewer
 
