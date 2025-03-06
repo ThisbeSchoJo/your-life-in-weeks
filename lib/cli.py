@@ -21,20 +21,23 @@ def main():
 
         choice = input("> ")
 
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
+        # if choice == "0":
+        #     exit_program()
+        if choice == "1":
             interact_with_weeks_data()
         elif choice == "2":
             interact_with_users_data()
+        elif choice == "3":
+            exit_program()
         else:
             print("Invalid choice")
 
 def menu():
     print("Please select an option:")
-    print("0. Exit the program")
+    # print("0. Exit the program")
     print("1. Interact with weeks data")
     print("2. Interact with users data")
+    print("3. Exit the program")
 
 if __name__ == "__main__":
     main()

@@ -7,12 +7,14 @@ def interact_with_weeks_data():
     while True:
         week_menu()
         choice = input("> ")
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
+        # if choice == "0":
+        #     exit_program()
+        if choice == "1":
             get_all_weeks()
         elif choice == "2":
             get_weeks_by_satisfaction()
+        elif choice == "3":
+            exit_program()
         else:
             print("Invalid choice")
 
@@ -48,14 +50,16 @@ def interact_with_users_data():
     while True:
         user_menu()
         choice = input("> ")
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
+        # if choice == "0":
+        #     exit_program()
+        if choice == "1":
             get_all_users()
         elif choice == "2":
             select_user_to_see_life_in_weeks()
         elif choice == "3":
             create_user()
+        elif choice == "4":
+            exit_program()
         else:
             print("Invalid choice")
 
@@ -96,16 +100,18 @@ def exit_program():
 
 def week_menu():
     print("Please select an option:")
-    print("0. Exit the program")
+    # print("0. Exit the program")
     print("1. Retrieve all weeks")
     print("2. Retrieve weeks based on satisfaction rating")
+    print("3. Exit the program")
     # print("2. Interact with comments data")
 
 def user_menu():
     print("Please select an option:")
-    print("0. Exit the program")
+    # print("0. Exit the program")
     print("1. Retrieve all users")
     print("2. Select user to see their life in weeks")
     print("3. Create a new user")
+    print("4. Exit the program")
     # print("2. Interact with comments data")
 
