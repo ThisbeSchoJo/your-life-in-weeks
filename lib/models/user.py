@@ -128,7 +128,9 @@ class User:
         row = CURSOR.execute(sql, (id,)).fetchone()
         if row:
             return cls.instance_from_db(row)
-        return None
+        else:
+            print("User not found.")
+            return None
     
     def delete(self):
         sql = '''

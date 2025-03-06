@@ -30,14 +30,11 @@ def main():
         else:
             print("Invalid choice")
 
-
 def menu():
     print("Please select an option:")
     print("0. Exit the program")
     print("1. Interact with weeks data")
     print("2. Interact with users data")
-    print("3. Create a new user")
-
 
 if __name__ == "__main__":
     main()
