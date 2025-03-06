@@ -14,18 +14,11 @@ def interact_with_weeks_data():
         elif choice == "2":
             get_weeks_by_satisfaction()
         elif choice == "3":
+            get_weeks_by_user()
+        elif choice == "4":
             exit_program()
         else:
             print("Invalid choice")
-
-def create_user():
-    name = input("Enter name: ")
-    birthdate = input("Enter birthdate (YYYY-MM-DD): ")
-    try:
-        user = User.create(name, birthdate)
-        print(f"User {user.name} created successfully with ID {user.id}")
-    except:
-        raise Exception(f"Error creating User {user.name}!")
 
 def get_all_weeks():
     weeks = Week.get_all()
@@ -45,13 +38,23 @@ def get_weeks_by_satisfaction():
 
     input("\n--Enter any key to continue... --\n")
 
+def get_weeks_by_user():
+    print("\nEnter the user id for the user whose weeks you would like to display.\n")
+    selected_user_id  = input("> ")
+    try:
+        selected_user_id = int(selected_user_id)
+    except ValueError:
+        print("Error: Please enter a valid integer for the user ID.")
+        return
+    # print(selected_user_id)
+    Week.filter_weeks_by_user(selected_user_id)
+
+    input("\n--Enter any key to continue... --\n")
 
 def interact_with_users_data():
     while True:
         user_menu()
         choice = input("> ")
-        # if choice == "0":
-        #     exit_program()
         if choice == "1":
             get_all_users()
         elif choice == "2":
@@ -74,8 +77,6 @@ def get_all_users():
     input("\n--Enter any key to continue... --\n")
 
 def select_user_to_see_life_in_weeks():
-    # input to select user
-    # call a function in User that will display that user's life in weeks
     User.get_all()
     for user in User.all:
         print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
@@ -91,6 +92,15 @@ def select_user_to_see_life_in_weeks():
     # User.print_life_in_weeks(selected_user_id)
     input("\n--Enter any key to continue... --\n")
 
+def create_user():
+    name = input("Enter name: ")
+    birthdate = input("Enter birthdate (YYYY-MM-DD): ")
+    try:
+        user = User.create(name, birthdate)
+        print(f"User {user.name} created successfully with ID {user.id}")
+    except:
+        raise Exception(f"Error creating User {user.name}!")
+    
 def exit_program():
     print("Life is precious. Collect your diamonds wisely.")
     img = Image.open("lib/diamond_spoon.png")  
@@ -103,7 +113,8 @@ def week_menu():
     # print("0. Exit the program")
     print("1. Retrieve all weeks")
     print("2. Retrieve weeks based on satisfaction rating")
-    print("3. Exit the program")
+    print("3. Retrieve weeks for a specific user")
+    print("4. Exit the program")
     # print("2. Interact with comments data")
 
 def user_menu():

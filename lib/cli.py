@@ -1,5 +1,5 @@
 # lib/cli.py
-from colorama import Fore, Style
+# from colorama import Fore, Style
 from rich.console import Console
 
 from helpers import (

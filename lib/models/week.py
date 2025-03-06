@@ -122,6 +122,16 @@ class Week:
             return cls.instance_from_db(row)
         return None
     
+    @classmethod
+    def filter_weeks_by_user(cls, selected_user_id):
+        Week.get_all()
+        for week in Week.all:
+            if week.user_id == int(selected_user_id):
+                user = User.find_by_id(week.user_id)
+                print(f"Week ID: {week.id}, User: {user.name}, Date: {week.date}, Saisfaction Rating: {week.satisfaction_rating}/10")
+                print(f"Week summary: {week.comments}")
+                print("-" *40)
+
     def calculate_week_number(self):
         # Fetch user's birthdate
         user = User.find_by_id(self.user_id)
