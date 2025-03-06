@@ -9,6 +9,7 @@ def seed_database():
     Week.create_table()
     User.create_table()
 
+    Week.create(1, "2024-12-17", 8, "Went to Norway and Spain with AG - went dogsledding, saw the northern lights! And had a lot of patatas bravas<3")
     Week.create(1, "2025-01-01", 1, "First week in NYC! Unfortunately I was down bad this week though...")
     Week.create(1, "2025-01-07", 9, "Was exciting to start class and loved the material and meeting everyone! EG came back from his trip this week and Frankie came back from NH!! Think I was fully feeling the W finally.")
     Week.create(1, "2025-01-14", 8, "Things were still good! Enjoying NYC and being social and classes were going very well.")
