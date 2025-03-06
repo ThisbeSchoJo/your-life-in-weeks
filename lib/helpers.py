@@ -105,9 +105,9 @@ def create_user():
         raise Exception(f"Error creating User {user.name}!")
     
 def exit_program():
-    print("There are trillions upon trillions of weeks in eternity, and this grid is your tiny handful.")
-    print("Imagine each of your weeks is a small, .05 carat diamond.")
-    print("If you multiply the volume of a .05 carat diamond by the number of weeks in 90 years (4,680), it adds up to just under a tablespoon.")
+    print("There are trillions upon trillions of weeks in eternity, and this grid is your tiny handful.\n")
+    print("Imagine each of your weeks is a small, .05 carat diamond.\n")
+    print("If you multiply the volume of a .05 carat diamond by the number of weeks in 90 years (4,680), it adds up to just under a tablespoon.\n")
     print("Are you making the most of your weeks?")
     input("\n--Enter any key to continue... --\n")
     img = Image.open("lib/diamond_spoon.png")  
