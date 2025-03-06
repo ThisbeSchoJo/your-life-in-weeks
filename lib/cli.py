@@ -17,12 +17,17 @@ def main():
     console = Console()
 
     console.print("[bold cyan]\nWelcome to Your Life in Weeks![/bold cyan]\n")
+    input("\n--Enter any key to continue... --\n")
     console.print("[italic cyan]It kind of feels like our lives are made up of a countless number of weeks.[italic cyan]\n")
-    console.print("[italic cyan]We imagine we will walk our dogs a hundred more times, we agonize over something embarrassing we said, \nwe pull our hair out over our crying toddler, we tell ourselves we'll finally ask out the barista next time, \nwe forget to return our sister's phone call, our plans never make it out of the friend's group chat, \nwe make shallow small talk and forget to listen when others respond, we tell ourselves we will go skydiving *someday*, \nwe hold off saying 'I love you' because it is too soon, we get annoyed with our mother's nagging, \nwe think 'how's work?' is enough with our father, we stay at a job that makes us miserable for fear of change. [italic cyan]\n")
+    # console.print("[italic cyan]We imagine we will walk our dogs a hundred more times, \nwe agonize over something embarrassing we said, \nwe tell ourselves we'll finally ask out the barista next time, \nwe forget to return our sister's phone call, \nour plans never make it out of the friend's group chat, \nwe make shallow small talk and forget to listen when others respond, \nwe tell ourselves we will go skydiving *someday*, \nwe hold off saying 'I love you' because it is too soon, \nwe get annoyed with our mother's nagging, \nwe think 'how's work?' is enough with our father, \nwe stay at a job that makes us miserable for fear of change. [italic cyan]\n")
+    input("\n--Enter any key to continue... --\n")
     console.print("[italic cyan]We let a million moments pass us by unnoticed, unappreciated, or untouched, because we think we have unlimited time.[italic cyan]\n")
     console.print("[italic cyan]A passing week feels like a drop in the bucket of our time. [italic cyan]\n")
-    console.print("[italic cyan]But truly, we each only get a finite, countable number of weeks... [italic cyan]\n\n")
+    input("\n--Enter any key to continue... --\n")
+    console.print("[italic cyan]But truly, we each only get a finite, countable number of weeks... [italic cyan]\n")
+    input("\n--Enter any key to continue... --\n")
     console.print("[italic cyan]This interactive CLI tool lays out your life before you—every week you've lived and every week you have left.[italic cyan]\n")
+    input("\n--Enter any key to continue... --\n")
     while True:
         
         menu()
