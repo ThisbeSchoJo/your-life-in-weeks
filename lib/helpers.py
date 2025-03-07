@@ -16,6 +16,8 @@ def interact_with_weeks_data():
         elif choice == "3":
             get_weeks_by_user()
         elif choice == "4":
+            delete_week()
+        elif choice == "5":
             exit_program()
         else:
             print("Invalid choice")
@@ -50,6 +52,20 @@ def get_weeks_by_user():
 
     console.input("[black]--Press any key to continue...--[/black]")
 
+def delete_week():
+    week_id = input("Enter the ID of the week to delete: ")
+    week = Week.find_by_id(week_id)
+
+    if week:
+        confirm = input(f"Are you sure you want to delete Week {week.id}? (y/n): ").lower()
+        if confirm == "y":
+            week.delete()  # Calls the delete method from the Week class
+            print(f"Week {week.id} has been deleted.")
+        else:
+            print("Deletion canceled.")
+    else:
+        print("Week not found.")
+
 def interact_with_users_data():
     while True:
         user_menu()
@@ -61,6 +77,8 @@ def interact_with_users_data():
         elif choice == "3":
             create_user()
         elif choice == "4":
+            delete_user()
+        elif choice == "5":
             exit_program()
         else:
             print("Invalid choice")
@@ -107,6 +125,21 @@ def create_user():
     except:
         raise Exception(f"Error creating User {user.name}!")
     
+def delete_user():
+    user_id = input("Enter the ID of the user to delete: ")
+    user = User.find_by_id(user_id)
+
+    if user:
+        confirm = input(f"Are you sure you want to delete User {user.id}? (y/n): ").lower()
+        if confirm == "y":
+            user.delete()  # Calls the delete method from the Week class
+            print(f"User {user.id} has been deleted.")
+        else:
+            print("Deletion canceled.")
+    else:
+        print("User not found.")
+
+
 def exit_program():
 
     console.print("[italic bold cyan]\nThere are trillions upon trillions of weeks in eternity, and this grid is your tiny handful.\n[italic bold cyan]")
@@ -124,12 +157,14 @@ def week_menu():
     print("1. Retrieve all weeks")
     print("2. Retrieve weeks based on satisfaction rating")
     print("3. Retrieve weeks for a specific user")
-    print("4. Exit the program")
+    print("4. Delete a week")
+    print("5. Exit the program")
 
 def user_menu():
     print("Please select an option:")
     print("1. Retrieve all users")
     print("2. Select user to see their life in weeks")
     print("3. Create a new user")
-    print("4. Exit the program")
+    print("4. Delete a user")
+    print("5. Exit the program")
 
