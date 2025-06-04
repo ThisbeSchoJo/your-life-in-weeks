@@ -18,6 +18,8 @@ def interact_with_weeks_data():
         elif choice == "4":
             delete_week()
         elif choice == "5":
+            return  # Return to main menu
+        elif choice == "6":
             exit_program()
         else:
             print("Invalid choice")
@@ -36,11 +38,19 @@ def get_all_weeks():
 def get_weeks_by_satisfaction():
     print("\nEnter the minimum satisfaction rating for weeks displayed.\n")
     min_rating  = input("> ")
+    try:
+        min_rating = int(min_rating)
+    except ValueError:
+        print("Please enter a valid integer for the minimum rating.")
+        return
     Week.filter_weeks_by_satisfaction(min_rating)
-
     console.input("[black]--Press any key to continue...--[/black]")
 
 def get_weeks_by_user():
+    User.get_all()
+    print("Here is the data for all users:\n")
+    for user in User.all:
+        print(f"User ID: {user.id}, Name: {user.name}, Birthdate: {user.birthdate}")
     print("\nEnter the user id for the user whose weeks you would like to display.\n")
     selected_user_id  = input("> ")
     try:
@@ -49,10 +59,14 @@ def get_weeks_by_user():
         print("Error: Please enter a valid integer for the user ID.")
         return
     Week.filter_weeks_by_user(selected_user_id)
-
     console.input("[black]--Press any key to continue...--[/black]")
 
 def delete_week():
+    Week.get_all()
+    print("Here is the data for all weeks:\n")
+    for week in Week.all:
+        user = User.find_by_id(week.user_id)
+        print(f"Week ID: {week.id}, User: {user.name if user else 'Unknown'}, Date: {week.date}, Rating: {week.satisfaction_rating}, Summary: {week.comments}")
     week_id = input("Enter the ID of the week to delete: ")
     week = Week.find_by_id(week_id)
 
@@ -79,6 +93,8 @@ def interact_with_users_data():
         elif choice == "4":
             delete_user()
         elif choice == "5":
+            return  # Return to main menu
+        elif choice == "6":
             exit_program()
         else:
             print("Invalid choice")
@@ -148,7 +164,7 @@ def exit_program():
     console.print("[italic bold cyan]Are you making the most of your weeks?\n[italic bold cyan]")
     console.input("[black]--Press any key to continue...--[/black]")
     img = Image.open("lib/diamond_spoon.png")  
-    img.show()  # Opens with the system’s default image viewer
+    img.show()  # Opens with the system's default image viewer
 
     exit()
 
@@ -158,7 +174,8 @@ def week_menu():
     print("2. Retrieve weeks based on satisfaction rating")
     print("3. Retrieve weeks for a specific user")
     print("4. Delete a week")
-    print("5. Exit the program")
+    print("5. Return to main menu")
+    print("6. Exit the program")
 
 def user_menu():
     print("Please select an option:")
@@ -166,5 +183,6 @@ def user_menu():
     print("2. Select user to see their life in weeks")
     print("3. Create a new user")
     print("4. Delete a user")
-    print("5. Exit the program")
+    print("5. Return to main menu")
+    print("6. Exit the program")
 

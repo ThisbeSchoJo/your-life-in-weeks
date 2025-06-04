@@ -123,11 +123,11 @@ class Week:
     
     @classmethod
     def filter_weeks_by_user(cls, selected_user_id):
-        Week.get_all()
-        for week in Week.all:
+        cls.get_all()
+        for week in cls.all:
             if week.user_id == int(selected_user_id):
                 user = User.find_by_id(week.user_id)
-                print(f"Week ID: {week.id}, User: {user.name}, Date: {week.date}, Saisfaction Rating: {week.satisfaction_rating}/10")
+                print(f"Week ID: {week.id}, User: {user.name}, Date: {week.date}, Satisfaction Rating: {week.satisfaction_rating}/10")
                 print(f"Week summary: {week.comments}")
                 print("-" *40)
 
@@ -180,9 +180,10 @@ class Week:
 
         return [Comment.instance_from_db(row) for row in rows]
 
-    def filter_weeks_by_satisfaction(self, min_rating=5):
-        Week.get_all()
-        for week in Week.all:
+    @classmethod
+    def filter_weeks_by_satisfaction(cls, min_rating):
+        cls.get_all()
+        for week in cls.all:
             if week.satisfaction_rating >= min_rating:
                 user = User.find_by_id(week.user_id)
                 print(f"Week ID: {week.id}, User: {user.name}, Date: {week.date}, Saisfaction Rating: {week.satisfaction_rating}/10")
